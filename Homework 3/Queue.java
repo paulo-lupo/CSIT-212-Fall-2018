@@ -16,7 +16,6 @@ package ds;
 
 public class Queue {
 	
-	// Constructors given by the professor
 	public int size;
 	public int[] array;
 	public int head;
@@ -37,56 +36,50 @@ public class Queue {
 	}
 	
 	/*
-	 * Implement the ENQUEUE(x) function
+	 * Implement the ENQUEUE(Q, x) function
 	 */
 	public void enqueue (int x) {
+
+		array[tail] = x;
+			
+		// only needed because of for the for loop in the toString method
+		if (head == -1) {
+			head = 0;
+		}
 		
 		// Bonus Credit: Checks if the queue is full
-		if(head == tail) {
-			System.err.println("Queue is Full");
-		} 
-		else {
-			array[tail] = x;
-			
-			/* 
-			 * only needed because of the given for loop
-			 * in the toString method */
-			if (head == -1) {
-				head = 0;
-			}
-			
-			if(tail == size) { 		
-				tail = 0;
-			} else {
-				tail++;
-			}
-			//System.out.println(tail);
+		if(tail == size-1) { 		
+			tail = 0;
+		} else {
+			tail++;
 		}
 	}
 	
 	/*
-	 * Implement the DEQUEUE() function
+	 * Implement the DEQUEUE(Q) function
 	 */
-	public int dequeue () {
+	public int dequeue () {		
 		int x = array[head];
-		
-		// Bonus Credit: checks if the queue is empty
-		if ((head + 1) % size == tail ) {
-			System.err.println("Queue is Empty");
+		if(head == size-1) {			
+			head = 0;
 		} else {
-			if(head == size) {			
-				head = 0;
-			} else {
-				head++;
-			}
-			
+			head++;
 		}
+		
 		return x;
 	}
 	
+	// Returns if the queue is empty or not
+	public boolean isEmpty() {
+		if ((tail + 1) % size == head) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	/*
-	 * All of the methods from here down were given by the professor
-	 * Convert queue to string in the format of #size, head, tail, [#elements]
+	 * Converts queue to string in the format of size, head, tail, [elements]
 	 */
 	public String toString () {
 		String str;
@@ -94,7 +87,6 @@ public class Queue {
 		str = size + ", " + head + ", " + tail + ", [";
 		for (int i = head; i%size < tail; i++) {
 			str += array[i] + ",";
-			//System.out.println(i%size + ", " + i);
 		}
 		
 		str += "]";
@@ -116,5 +108,4 @@ public class Queue {
 			q.dequeue();
 		System.out.println(q.toString());
 	}
-
 }
